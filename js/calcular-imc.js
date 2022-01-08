@@ -1,6 +1,8 @@
 
 //Construyo variables para obtener html que necesito
 var pacientes = document.querySelectorAll(".paciente");
+
+
 // Iteracion sobre el array de pacientes que traigo en la linea de arriba
 for(var i = 0; i <= pacientes.length; i++){
     var paciente = pacientes[i];
@@ -11,6 +13,7 @@ for(var i = 0; i <= pacientes.length; i++){
     var tdImc = paciente.querySelector(".info-imc");
     var imc = peso / (altura * altura);
     tdImc.textContent = imc;
+    
     //Valido que los datos cargados sean correctos segun los parametros
     var pesoEsValido = true;
     var alturaEsValido = true;
