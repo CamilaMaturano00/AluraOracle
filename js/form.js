@@ -6,10 +6,18 @@ botonAdicionar.addEventListener("click",function(event){
     var form = document.querySelector("#form-adicionar");
     var paciente = capturarDatosPaciente(form);
     var pacienteTr = construirTr(paciente);
+    var errores = validarPaciente(paciente);
+
+    if(errores.length > 0){
+       exhibirMensajesErrores(errores);
+       return;
+    }
 
     var tabla = document.querySelector("#tabla-pacientes");
     tabla.appendChild(pacienteTr);
     form.reset();
+    var mensajesErrores = document.querySelector("#mensajes-errores");
+    mensajesErrores.innerHTML = "";
 });
 
 function capturarDatosPaciente(form){
@@ -26,7 +34,7 @@ function capturarDatosPaciente(form){
 
 function construirTr(paciente){
     var pacienteTr = document.createElement("tr");
-    
+
     pacienteTr.classList.add("paciente");
 
     pacienteTr.appendChild(construirTd(paciente.nombre,"info-nombre"));
@@ -42,4 +50,35 @@ function construirTd(dato,clase){
     td.classList.add(clase);
     td.textContent = dato;
     return td;
+}
+function validarPaciente(paciente){
+    var errores= [];
+    if(paciente.nombre.length == 0){
+        errores.push("El nombre no puede estar vacio");
+    }
+    if(paciente.peso.length == 0){
+        errores.push("El peso no puede estar vacio");
+    }if(paciente.altura.length == 0){
+        errores.push("La altura no puede estar vacio");
+    }if(paciente.gordura.length == 0){
+        errores.push("El %gordura no puede estar vacio");
+    }
+    if(!validarPeso(paciente.peso)){
+        errores.push("El peso es incorrecto");
+    }
+    if(!validarAltura(paciente.altura)){
+        errores.push("La altura es incorrecta");
+    }
+    return errores;
+}
+//Creo una lista desordenada a la cual le voy a ir agregando mensajes
+function exhibirMensajesErrores(errores){
+    var ul = document.querySelector("#mensajes-errores");
+    ul.innerHTML= ""
+    errores.forEach(function(error){
+        var li = document.createElement("li");
+        li.textContent = error;
+        ul.appendChild(li);
+    })
+    
 }
